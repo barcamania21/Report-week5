@@ -75,6 +75,28 @@ Sử dụng mô hình dự báo DecisionTreeClassifer (cây quyết định phâ
 print (clf.predict(vectorizer.transform(features(["Roger", "Lionel", "Cristiano", "Andres", "Sergio", "Taylor", "Adele"]))))
 """
 Thực hiện dự đoán kết quả từ những thông số biến đầu vào
-Thử nghiệm với một số cái tên nổi tiếng ^^
+Thử nghiệm với một số cái tên nổi tiếng :d
 """
 
+"""
+Đánh giá độ chính xác của mô hình
+"""
+Gender_pred = clf.predict(vectorizer.transform(Name_Test))
+
+""" 
+Accuracy: độ đo = số dự đoán đúng / tổng số dự đoán
+"""
+
+accuracy = accuracy_score(Gender_Test, Gender_pred)
+print('Accuracy: ', accuracy)
+
+"""
+Cross-validation: 
+Chia dữ liệu thành k tập con cùng kích thước (ở đây là 5). 
+Tại mỗi vòng lặp sử dụng một tập con là test set, các tập con còn lại là các training set.
+"""
+
+crossValScore = cross_val_score(clf, vectorizer.transform(Name), Gender, cv = 5)
+
+print('Mảng giá trị qua mỗi vòng lặp: ',crossValScore)
+print('Phân bố: %f (+/- %f)' %(crossValScore.mean(), crossValScore.std() * 2))
