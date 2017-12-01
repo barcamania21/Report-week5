@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
-from sklearn.utils import shuffle
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
 
 names=pd.read_csv('/Users/naduong1001/Desktop/name.csv')
 names = names.as_matrix()[:,1:]
@@ -26,10 +26,8 @@ features = np.vectorize(features)
 Name = features(names[:, 0])
 Gender = names[:, 2]
 
-Name, Gender = shuffle(Name, Gender)
-Name_Train, Name_Test = Name[:int(TRAIN_SPLIT * len(Name))], Name[int(TRAIN_SPLIT * len(Name)):]
-Gender_Train, Gender_Test = Gender[:int(TRAIN_SPLIT * len(Gender))], Gender[int(TRAIN_SPLIT * len(Gender)):]
 
+Name_Train, Name_Test, Gender_Train, Gender_Test = train_test_split(Name, Gender, test_size = 0.3)
 
 vectorizer = DictVectorizer()
 vectorizer.fit(Name_Train)
